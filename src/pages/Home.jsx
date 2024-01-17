@@ -22,6 +22,7 @@ const Home = () => {
                 setItems(json);
                 setIsLoading(false);
             });
+        window.scrollTo(0, 0);
     }, []);
 
     return (
@@ -33,9 +34,13 @@ const Home = () => {
             <h2 className='content__title'>Все пиццы</h2>
             <div className='content__items'>
                 {isLoading
-                    ? [...new Array(12)].map(() => <Skeleton />)
+                    ? [...new Array(12)].map((item, index) => <Skeleton key={index} />)
                     : items.map((obj) =>
-                          isLoading ? <Skeleton /> : <PizzaBlock {...obj} key={obj.id} />,
+                          isLoading ? (
+                              <Skeleton key={obj.id} />
+                          ) : (
+                              <PizzaBlock {...obj} key={obj.id} />
+                          ),
                       )}
             </div>
         </>
