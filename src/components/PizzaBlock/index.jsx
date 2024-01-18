@@ -5,7 +5,7 @@ function PizzaBlock({ title, imageUrl, sizes, types, price, rating }) {
     const [activeSize, setActiveSize] = useState(0);
     const [pizzaCounter, setPizzaCounter] = useState(0);
 
-    console.log(rating);
+    // console.log(rating);
 
     const onClickActiveType = (index) => {
         setActiveType(index);

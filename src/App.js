@@ -7,15 +7,25 @@ import NotFound from './pages/NotFound';
 
 import { Routes, Route } from 'react-router';
 import Cart from './pages/Cart';
+import { useState } from 'react';
+
+
 
 function App() {
+
+    const [searchValue, setSearchValue] = useState('');
+
+    console.log(searchValue)
+
+
+
     return (
         <div className="wrapper">
-            <Header />
+            <Header searchValue={searchValue} setSearchValue={setSearchValue} />
             <div className="content">
                 <div className="container">
                     <Routes>
-                        <Route path='/' element={<Home />} />
+                        <Route path='/' element={<Home searchValue={searchValue} />} />
                         <Route path='/cart' element={<Cart />} />
                         <Route path='*' element={<NotFound />} />
 

@@ -7,7 +7,7 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton';
 
 import { useEffect, useState } from 'react';
 
-const Home = () => {
+const Home = ({ searchValue }) => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [indexCategoriesSort, setIndexCategoritesSort] = useState(0);
@@ -47,10 +47,19 @@ const Home = () => {
             .then((json) => {
                 setItems(json);
                 setIsLoading(false);
-                console.log(json);
             });
         window.scrollTo(0, 0);
     }, [api]);
+
+    const pizzas = items
+        .filter((obj) => {
+            if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
+                return true;
+            }
+            return false;
+        })
+        .map((obj) => <PizzaBlock {...obj} key={obj.id} />);
+    const skeletons = [...new Array(12)]?.map((item, index) => <Skeleton key={index} />);
 
     return (
         <>
@@ -65,17 +74,7 @@ const Home = () => {
                 />
             </div>
             <h2 className='content__title'>Все пиццы</h2>
-            <div className='content__items'>
-                {isLoading
-                    ? [...new Array(12)]?.map((item, index) => <Skeleton key={index} />)
-                    : items?.map((obj) =>
-                          isLoading ? (
-                              <Skeleton key={obj.id} />
-                          ) : (
-                              <PizzaBlock {...obj} key={obj.id} />
-                          ),
-                      )}
-            </div>
+            <div className='content__items'>{isLoading ? skeletons : pizzas}</div>
         </>
     );
 };
