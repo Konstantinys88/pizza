@@ -6,15 +6,19 @@ import PizzaBlock from '../components/PizzaBlock';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
 
 import { useEffect, useState } from 'react';
+import Pagination from '../components/Pagination';
 
 const Home = ({ searchValue }) => {
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [indexCategoriesSort, setIndexCategoritesSort] = useState(0);
     const [indexCategories, setIndexCategorites] = useState(0);
+    const [curentPage, setCurentPage] = useState(1);
 
     let apiCategories = `rating`;
     let sortOrder = `desc`;
+    // const search = searchValue ? `&search=${searchValue}` : '';
+
     if (indexCategoriesSort === 0) {
         apiCategories = `rating`;
         sortOrder = `desc`;
@@ -26,9 +30,13 @@ const Home = ({ searchValue }) => {
         sortOrder = `asc`;
     }
 
-    let api = `https://65a65e8d74cf4207b4efdc2c.mockapi.io/items?${
+    let api = `https://65a65e8d74cf4207b4efdc2c.mockapi.io/items?page=${curentPage}&limit=8&${
         indexCategories > 0 ? `category=${indexCategories}` : ''
     }&sortBy=${apiCategories}&order=${sortOrder}`;
+
+    // console.log(items);
+    // console.log(curentPageCount);
+    // console.log(api);
 
     const onClickCategories = (index) => {
         setIndexCategorites(index);
@@ -36,6 +44,10 @@ const Home = ({ searchValue }) => {
 
     const onClickCategoriesSort = (index) => {
         setIndexCategoritesSort(index);
+    };
+
+    const onChangePage = (number) => {
+        setCurentPage(number);
     };
 
     useEffect(() => {
@@ -49,7 +61,7 @@ const Home = ({ searchValue }) => {
                 setIsLoading(false);
             });
         window.scrollTo(0, 0);
-    }, [api]);
+    }, [api, searchValue]);
 
     const pizzas = items
         .filter((obj) => {
@@ -75,6 +87,7 @@ const Home = ({ searchValue }) => {
             </div>
             <h2 className='content__title'>Все пиццы</h2>
             <div className='content__items'>{isLoading ? skeletons : pizzas}</div>
+            <Pagination onChangePage={onChangePage} />
         </>
     );
 };
