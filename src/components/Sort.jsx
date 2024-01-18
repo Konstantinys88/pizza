@@ -1,14 +1,15 @@
 import { useState } from 'react';
 
-function Sort() {
+function Sort({ onClickCategoriesSort }) {
     const [activeSort, setActiveSort] = useState(false);
     const [popupCategories, setPopupCategories] = useState('популярности');
 
     const categories = ['популярности', 'цене', ' алфавиту'];
 
-    const onClickLIstItem = (item) => {
+    const onClickLIstItem = (item, index) => {
         setPopupCategories(item);
         setActiveSort(!activeSort);
+        onClickCategoriesSort(index);
     };
 
     return (
@@ -34,7 +35,12 @@ function Sort() {
                     <ul>
                         {categories.map((item, index) => {
                             return (
-                                <li key={index} onClick={() => onClickLIstItem(item)}>
+                                <li
+                                    key={index}
+                                    onClick={() => {
+                                        onClickLIstItem(item, index);
+                                    }}
+                                >
                                     {item}
                                 </li>
                             );

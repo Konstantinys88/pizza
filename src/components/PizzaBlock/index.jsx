@@ -1,9 +1,11 @@
 import { useState } from 'react';
 
-function PizzaBlock({ title, priсe, imageUrl, sizes, types, id }) {
+function PizzaBlock({ title, imageUrl, sizes, types, price, rating }) {
     const [activeType, setActiveType] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
     const [pizzaCounter, setPizzaCounter] = useState(0);
+
+    console.log(rating);
 
     const onClickActiveType = (index) => {
         setActiveType(index);
@@ -52,7 +54,7 @@ function PizzaBlock({ title, priсe, imageUrl, sizes, types, id }) {
                 </ul>
             </div>
             <div className='pizza-block__bottom'>
-                <div className='pizza-block__price'>от {priсe} ₽</div>
+                <div className='pizza-block__price'>от {price} ₽</div>
                 <button onClick={onClickAddPizza} className='button button--outline button--add'>
                     <svg
                         width='12'
