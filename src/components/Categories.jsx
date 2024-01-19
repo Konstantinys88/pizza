@@ -1,5 +1,10 @@
-function Categories({ indexCategories, onClickCategories, setTitle }) {
+import { useDispatch } from 'react-redux';
+import { titleFilter } from '../redux/slices/filterSlice';
+
+function Categories({ indexCategories, onClickCategories }) {
     const categories = ['Все', 'Мясные', 'Вегетарианские', ' Гриль', 'Острые', 'Закрытые'];
+
+    const dispatch = useDispatch();
 
     return (
         <div className='categories'>
@@ -10,7 +15,7 @@ function Categories({ indexCategories, onClickCategories, setTitle }) {
                             key={index}
                             onClick={() => {
                                 onClickCategories(index);
-                                setTitle(item);
+                                dispatch(titleFilter(item));
                             }}
                             className={indexCategories === index ? 'active' : ''}
                         >
