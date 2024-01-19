@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -7,13 +7,17 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton';
 
 import { useEffect, useState } from 'react';
 import Pagination from '../components/Pagination';
+import { AppContext } from '../App';
 
-const Home = ({ searchValue }) => {
+const Home = () => {
+    const { searchValue } = useContext(AppContext);
+
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [indexCategoriesSort, setIndexCategoritesSort] = useState(0);
     const [indexCategories, setIndexCategorites] = useState(0);
     const [curentPage, setCurentPage] = useState(1);
+    const [title, setTitle] = useState('Все пиццы');
 
     let apiCategories = `rating`;
     let sortOrder = `desc`;
@@ -79,13 +83,14 @@ const Home = ({ searchValue }) => {
                 <Categories
                     onClickCategories={onClickCategories}
                     indexCategories={indexCategories}
+                    setTitle={setTitle}
                 />
                 <Sort
                     onClickCategoriesSort={onClickCategoriesSort}
                     indexCategoriesSort={indexCategoriesSort}
                 />
             </div>
-            <h2 className='content__title'>Все пиццы</h2>
+            <h2 className='content__title'>{title} пиццы</h2>
             <div className='content__items'>{isLoading ? skeletons : pizzas}</div>
             <Pagination onChangePage={onChangePage} />
         </>

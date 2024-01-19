@@ -1,4 +1,4 @@
-function Categories({ indexCategories, onClickCategories }) {
+function Categories({ indexCategories, onClickCategories, setTitle }) {
     const categories = ['Все', 'Мясные', 'Вегетарианские', ' Гриль', 'Острые', 'Закрытые'];
 
     return (
@@ -8,7 +8,10 @@ function Categories({ indexCategories, onClickCategories }) {
                     return (
                         <li
                             key={index}
-                            onClick={() => onClickCategories(index)}
+                            onClick={() => {
+                                onClickCategories(index);
+                                setTitle(item);
+                            }}
                             className={indexCategories === index ? 'active' : ''}
                         >
                             {item}
