@@ -12,18 +12,17 @@ import { useSelector } from 'react-redux';
 
 const Home = () => {
     const title = useSelector((state) => state.filter.title);
+    const indexCategories = useSelector((state) => state.filter.indexCategories);
+    const indexCategoriesSort = useSelector((state) => state.filter.indexCategoriesSort);
 
     const { searchValue } = useContext(AppContext);
 
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [indexCategoriesSort, setIndexCategoritesSort] = useState(0);
-    const [indexCategories, setIndexCategorites] = useState(0);
     const [curentPage, setCurentPage] = useState(1);
 
     let apiCategories = `rating`;
     let sortOrder = `desc`;
-    // const search = searchValue ? `&search=${searchValue}` : '';
 
     if (indexCategoriesSort === 0) {
         apiCategories = `rating`;
@@ -39,18 +38,6 @@ const Home = () => {
     let api = `https://65a65e8d74cf4207b4efdc2c.mockapi.io/items?page=${curentPage}&limit=8&${
         indexCategories > 0 ? `category=${indexCategories}` : ''
     }&sortBy=${apiCategories}&order=${sortOrder}`;
-
-    // console.log(items);
-    // console.log(curentPageCount);
-    // console.log(api);
-
-    const onClickCategories = (index) => {
-        setIndexCategorites(index);
-    };
-
-    const onClickCategoriesSort = (index) => {
-        setIndexCategoritesSort(index);
-    };
 
     const onChangePage = (number) => {
         setCurentPage(number);
@@ -77,19 +64,14 @@ const Home = () => {
             return false;
         })
         .map((obj) => <PizzaBlock {...obj} key={obj.id} />);
+
     const skeletons = [...new Array(12)]?.map((item, index) => <Skeleton key={index} />);
 
     return (
         <>
             <div className='content__top'>
-                <Categories
-                    onClickCategories={onClickCategories}
-                    indexCategories={indexCategories}
-                />
-                <Sort
-                    onClickCategoriesSort={onClickCategoriesSort}
-                    indexCategoriesSort={indexCategoriesSort}
-                />
+                <Categories indexCategories={indexCategories} />
+                <Sort />
             </div>
             <h2 className='content__title'>{title} пиццы </h2>
             <div className='content__items'>{isLoading ? skeletons : pizzas}</div>

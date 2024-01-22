@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { pizzasFilterSort } from '../redux/slices/filterSlice';
 
-function Sort({ onClickCategoriesSort }) {
+function Sort() {
+    const dispatch = useDispatch();
+
     const [activeSort, setActiveSort] = useState(false);
     const [popupCategories, setPopupCategories] = useState('популярности');
 
@@ -9,7 +13,7 @@ function Sort({ onClickCategoriesSort }) {
     const onClickLIstItem = (item, index) => {
         setPopupCategories(item);
         setActiveSort(!activeSort);
-        onClickCategoriesSort(index);
+        dispatch(pizzasFilterSort(index));
     };
 
     return (
