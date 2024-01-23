@@ -1,7 +1,11 @@
 import React, { useContext } from 'react';
 import Pagination from '../components/Pagination';
 import axios from 'axios';
+import qs from 'qs';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import { setFilters } from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
@@ -12,6 +16,9 @@ import { AppContext } from '../App';
 import { useSelector } from 'react-redux';
 
 const Home = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const title = useSelector((state) => state.filter.title);
     const indexCategories = useSelector((state) => state.filter.indexCategories);
     const indexCategoriesSort = useSelector((state) => state.filter.indexCategoriesSort);
@@ -45,6 +52,13 @@ const Home = () => {
     };
 
     useEffect(() => {
+        if (window.location.search) {
+            const params = qs.parse(window.location.search.substring(1));
+            dispatch(setFilters({ ...params }));
+        }
+    }, []);
+
+    useEffect(() => {
         setIsLoading(true);
         axios.get(api).then((res) => {
             setItems(res.data);
@@ -52,6 +66,15 @@ const Home = () => {
         });
         window.scrollTo(0, 0);
     }, [api, searchValue]);
+
+    useEffect(() => {
+        const queryString = qs.stringify({
+            sortProperty: indexCategoriesSort.sortProperty,
+            indexCategories,
+            curentPage,
+        });
+        navigate(`?${queryString}`);
+    }, [indexCategoriesSort, indexCategories, curentPage, navigate]);
 
     const pizzas = items
         .filter((obj) => {

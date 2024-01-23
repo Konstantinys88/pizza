@@ -19,8 +19,12 @@ export const filterSlice = createSlice({
 		pizzasFilterSort: (state, action) => {
 			state.indexCategoriesSort = action.payload;
 		},
+		setFilters: (state, action) => {
+			state.indexCategoriesSort = +action.payload.indexCategoriesSort;
+			state.indexCategories = +action.payload.indexCategories;
+		}
 	},
 })
 
-export const { titleFilter, pizzasFilter, pizzasFilterSort } = filterSlice.actions;
+export const { titleFilter, pizzasFilter, pizzasFilterSort, setFilters } = filterSlice.actions;
 export default filterSlice.reducer;
