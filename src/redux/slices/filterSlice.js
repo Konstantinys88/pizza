@@ -18,7 +18,7 @@ export const filterSlice = createSlice({
 		},
 		pizzasFilterSort: (state, action) => {
 			state.indexCategoriesSort = action.payload;
-		}
+		},
 	},
 })
 
