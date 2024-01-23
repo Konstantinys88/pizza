@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { pizzasFilterSort } from '../redux/slices/filterSlice';
 
 function Sort() {
     const dispatch = useDispatch();
+    const sortRef = useRef();
 
     const [activeSort, setActiveSort] = useState(false);
     const [popupCategories, setPopupCategories] = useState('популярности');
+
+    console.log(activeSort);
 
     const categories = ['популярности', 'цене', ' алфавиту'];
 
@@ -16,8 +19,23 @@ function Sort() {
         dispatch(pizzasFilterSort(index));
     };
 
+    useEffect(() => {
+        const handleClickOutsise = (e) => {
+            if (!e.composedPath().includes(sortRef.current)) {
+                console.log('ok');
+                setActiveSort(false);
+            }
+        };
+
+        document.body.addEventListener('click', handleClickOutsise);
+
+        return () => {
+            document.body.removeEventListener('click', handleClickOutsise);
+        };
+    }, []);
+
     return (
-        <div className='sort'>
+        <div ref={sortRef} className='sort'>
             <div className='sort__label'>
                 <svg
                     width='10'
