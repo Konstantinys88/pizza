@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Pagination from '../components/Pagination';
+import axios from 'axios';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -45,14 +46,10 @@ const Home = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        fetch(api)
-            .then((res) => {
-                return res.json();
-            })
-            .then((json) => {
-                setItems(json);
-                setIsLoading(false);
-            });
+        axios.get(api).then((res) => {
+            setItems(res.data);
+            setIsLoading(false);
+        });
         window.scrollTo(0, 0);
     }, [api, searchValue]);
 
