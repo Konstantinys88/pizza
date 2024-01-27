@@ -180,7 +180,9 @@ body {
             }
 
             b {
+                width: 30px;
                 font-size: 22px;
+                text-align: center;
             }
         }
 
@@ -188,7 +190,7 @@ body {
             display: flex;
             align-items: center;
             justify-content: center;
-            // width: 33%;
+            width: 80px;
 
             b {
                 font-weight: bold;
@@ -309,7 +311,7 @@ body {
     }
 
     &--empty {
-        margin: 0 auto;
+        margin: 100px auto;
         width: 560px;
         text-align: center;
 

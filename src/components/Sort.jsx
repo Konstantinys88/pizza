@@ -9,8 +9,6 @@ function Sort() {
     const [activeSort, setActiveSort] = useState(false);
     const [popupCategories, setPopupCategories] = useState('популярности');
 
-    console.log(activeSort);
-
     const categories = ['популярности', 'цене', ' алфавиту'];
 
     const onClickLIstItem = (item, index) => {
@@ -22,7 +20,6 @@ function Sort() {
     useEffect(() => {
         const handleClickOutsise = (e) => {
             if (!e.composedPath().includes(sortRef.current)) {
-                console.log('ok');
                 setActiveSort(false);
             }
         };
