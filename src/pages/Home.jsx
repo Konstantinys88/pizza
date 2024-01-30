@@ -88,8 +88,20 @@ const Home = () => {
                 <Categories indexCategories={indexCategories} />
                 <Sort />
             </div>
-            <h2 className='content__title'>{title} пиццы </h2>
-            <div className='content__items'>{status === 'loading' ? skeletons : pizzas}</div>
+            <h2 className='content__title'>{title} пиццы </h2>{' '}
+            {status === 'error' ? (
+                <div className='content__error-info'>
+                    <h2>
+                        <span>😕</span>
+                        <br />
+                        Ничего не найдено.
+                        <br />
+                        <p>Попробуйте зайти позже.</p>
+                    </h2>
+                </div>
+            ) : (
+                <div className='content__items'>{status === 'loading' ? skeletons : pizzas}</div>
+            )}
             <Pagination onChangePage={onChangePage} />
         </>
     );

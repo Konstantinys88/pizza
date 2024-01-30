@@ -40,6 +40,13 @@ body {
         flex-wrap: wrap;
         gap: 25px;
     }
+    &__error-info {
+        text-align: center;
+        padding: 100px 0;
+        p {
+            font-size: 18px;
+        }
+    }
 }
 
 .container {
