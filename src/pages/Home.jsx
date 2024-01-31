@@ -1,34 +1,25 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Pagination from '../components/Pagination';
-// import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { setFilters } from '../redux/slices/filterSlice';
+import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import { Skeleton } from '../components/PizzaBlock/Skeleton';
 
 import { useEffect, useState } from 'react';
-import { AppContext } from '../App';
 import { useSelector } from 'react-redux';
-import { fetchPizzas } from '../redux/slices/pizzasSlice';
+import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
 
 const Home = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const title = useSelector((state) => state.filter.title);
-    const indexCategories = useSelector((state) => state.filter.indexCategories);
-    const indexCategoriesSort = useSelector((state) => state.filter.indexCategoriesSort);
-    const itemsPizzas = useSelector((state) => state.pizzas.itemsPizzas);
-    const status = useSelector((state) => state.pizzas.status);
-
-    const { searchValue } = useContext(AppContext);
-
-    // const [isLoading, setIsLoading] = useState(true);
+    const { title, indexCategories, indexCategoriesSort, searchValue } = useSelector(selectFilter);
+    const { status, itemsPizzas } = useSelector(selectPizzas);
     const [curentPage, setCurentPage] = useState(1);
 
     let apiCategories = `rating`;
