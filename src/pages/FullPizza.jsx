@@ -1,27 +1,46 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem } from '../../redux/slices/cartSlice';
-import { Link } from 'react-router-dom';
+import { addItem } from '../redux/slices/cartSlice';
 
-function PizzaBlock({ id, title, imageUrl, sizes, types, price, rating }) {
+const FullPizza = () => {
     const dispatch = useDispatch();
-    const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+    const [pizza, setPizza] = useState();
     const [activeType, setActiveType] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
 
-    const addedCount = cartItem ? cartItem.count : 0;
+    const { id } = useParams();
+
+    const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
 
     const onClickAdd = () => {
         const item = {
-            id,
-            title,
-            price,
-            imageUrl,
+            id: pizza.id,
+            title: pizza.title,
+            price: pizza.price,
+            imageUrl: pizza.imageUrl,
             type: typeNames[activeType],
             size: activeSize,
         };
         dispatch(addItem(item));
     };
+
+    const addedCount = cartItem ? cartItem.count : 0;
+
+    useEffect(() => {
+        async function fetchPizza() {
+            try {
+                const { data } = await axios.get(
+                    `https://65a65e8d74cf4207b4efdc2c.mockapi.io/items/${id}`,
+                );
+                setPizza(data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchPizza();
+    }, [id]);
 
     const onClickActiveType = (index) => {
         setActiveType(index);
@@ -33,15 +52,21 @@ function PizzaBlock({ id, title, imageUrl, sizes, types, price, rating }) {
 
     const typeNames = ['Тонкое', 'Традиционное'];
 
+    if (!pizza) {
+        return 'Загрузка...';
+    }
+
     return (
-        <div className='pizza-block'>
-            <Link to={`/pizza/${id}`}>
-                <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
-            </Link>
-            <h4 className='pizza-block__title'>{title}</h4>
+        <div className='fullPizza'>
+            <h4 className='pizza-block__title pizza-block__title_fullpage'>{pizza.title}</h4>
+            <img
+                className='pizza-block__image pizza-block__image_fullpage'
+                src={pizza.imageUrl}
+                alt='Pizza'
+            />
             <div className='pizza-block__selector'>
                 <ul>
-                    {types.map((type, index) => {
+                    {pizza.types.map((type, index) => {
                         return (
                             <li
                                 key={index}
@@ -54,7 +79,7 @@ function PizzaBlock({ id, title, imageUrl, sizes, types, price, rating }) {
                     })}
                 </ul>
                 <ul>
-                    {sizes.map((size, index) => {
+                    {pizza.sizes.map((size, index) => {
                         return (
                             <li
                                 key={index}
@@ -67,8 +92,8 @@ function PizzaBlock({ id, title, imageUrl, sizes, types, price, rating }) {
                     })}
                 </ul>
             </div>
-            <div className='pizza-block__bottom'>
-                <div className='pizza-block__price'>от {price} ₽</div>
+            <div className='pizza-block__bottom pizza-block__bottom_fullpage'>
+                <div className='pizza-block__price'>от {pizza.price} ₽</div>
                 <button onClick={onClickAdd} className='button button--outline button--add'>
                     <svg
                         width='12'
@@ -88,6 +113,6 @@ function PizzaBlock({ id, title, imageUrl, sizes, types, price, rating }) {
             </div>
         </div>
     );
-}
+};
 
-export default PizzaBlock;
+export default FullPizza;
