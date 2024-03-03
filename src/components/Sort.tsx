@@ -4,21 +4,21 @@ import { pizzasFilterSort } from '../redux/slices/filterSlice';
 
 function Sort() {
     const dispatch = useDispatch();
-    const sortRef = useRef();
+    const sortRef = useRef<HTMLDivElement>(null);
 
     const [activeSort, setActiveSort] = useState(false);
     const [popupCategories, setPopupCategories] = useState('популярности');
 
     const categories = ['популярности', 'цене', ' алфавиту'];
 
-    const onClickLIstItem = (item, index) => {
+    const onClickLIstItem = (item: string, index: number) => {
         setPopupCategories(item);
         setActiveSort(!activeSort);
         dispatch(pizzasFilterSort(index));
     };
 
     useEffect(() => {
-        const handleClickOutsise = (e) => {
+        const handleClickOutsise = (e:any) => {
             if (!e.composedPath().includes(sortRef.current)) {
                 setActiveSort(false);
             }

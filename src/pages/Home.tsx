@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
 
-const Home = () => {
+const Home: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const Home = () => {
         sortOrder = `asc`;
     }
 
-    const onChangePage = (number) => {
+    const onChangePage = (number: number) => {
         setCurentPage(number);
     };
 
@@ -48,6 +48,7 @@ const Home = () => {
     }, [dispatch]);
 
     useEffect(() => {
+        // @ts-ignore
         dispatch(fetchPizzas({ curentPage, indexCategories, apiCategories, sortOrder }));
 
         window.scrollTo(0, 0);
@@ -63,13 +64,13 @@ const Home = () => {
     }, [indexCategoriesSort, indexCategories, curentPage, navigate]);
 
     const pizzas = itemsPizzas
-        .filter((obj) => {
+        .filter((obj: any) => {
             if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {
                 return true;
             }
             return false;
         })
-        .map((obj) => <PizzaBlock {...obj} key={obj.id} />);
+        .map((obj: any) => <PizzaBlock {...obj} key={obj.id} />);
 
     const skeletons = [...new Array(12)]?.map((item, index) => <Skeleton key={index} />);
 

@@ -1,9 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { titleFilter, pizzasFilter } from '../redux/slices/filterSlice';
 
-function Categories({ indexCategories }) {
-    const categories = ['Все', 'Мясные', 'Вегетарианские', ' Гриль', 'Острые', 'Закрытые'];
+type CategoriesProps = {
+    indexCategories: number
+}
 
+const Categories: React.FC <CategoriesProps> = ({ indexCategories }) => {
+
+    const categories = ['Все', 'Мясные', 'Вегетарианские', ' Гриль', 'Острые', 'Закрытые'];
     const dispatch = useDispatch();
 
     return (

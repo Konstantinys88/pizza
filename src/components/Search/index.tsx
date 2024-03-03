@@ -4,27 +4,28 @@ import { useCallback, useRef, useState } from 'react';
 import { setSearchValue } from '../../redux/slices/filterSlice';
 import { useDispatch } from 'react-redux';
 
-const Search = () => {
+const Search: React.FC = () => {
     const dispatch = useDispatch();
-    const [value, setValue] = useState();
-    const inputRef = useRef();
+    const [value, setValue] = useState<string>('');
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const onClickClear = () => {
         dispatch(setSearchValue(''));
         setValue('');
-        inputRef.current.focus();
+        inputRef.current?.focus();
     };
 
-    const updateSerachValue = useCallback(
-        debounce((str) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const updateSearchValue = useCallback(
+        debounce((str: string) => {
             dispatch(setSearchValue(str));
         }, 1000),
-        [],
+        [dispatch],
     );
 
-    const onChaangeInput = (e) => {
+    const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
-        updateSerachValue(e.target.value);
+        updateSearchValue(e.target.value);
     };
 
     return (
@@ -66,13 +67,13 @@ const Search = () => {
             <input
                 ref={inputRef}
                 value={value}
-                onChange={onChaangeInput}
+                onChange={onChangeInput}
                 className={styles.input}
                 placeholder='Найти пиццу...'
             />
             {value ? (
                 <svg
-                    onClick={() => onClickClear()}
+                    onClick={onClickClear}
                     className={styles.clearIcon}
                     viewBox='0 0 20 20'
                     xmlns='http://www.w3.org/2000/svg'
