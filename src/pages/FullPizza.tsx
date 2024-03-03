@@ -4,29 +4,24 @@ import { useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from '../redux/slices/cartSlice';
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
     const dispatch = useDispatch();
-    const [pizza, setPizza] = useState();
+
+    const [pizza, setPizza] = useState<{
+        id: number,
+        title: string,
+        price: number,
+        imageUrl: string,
+        sizes: number[],
+        types: number[],
+    }>();
+
     const [activeType, setActiveType] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
 
     const { id } = useParams();
 
-    const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
-
-    const onClickAdd = () => {
-        const item = {
-            id: pizza.id,
-            title: pizza.title,
-            price: pizza.price,
-            imageUrl: pizza.imageUrl,
-            type: typeNames[activeType],
-            size: activeSize,
-        };
-        dispatch(addItem(item));
-    };
-
-    const addedCount = cartItem ? cartItem.count : 0;
+    const cartItem = useSelector((state: any) => state.cart.items.find((obj: any) => obj.id === id));
 
     useEffect(() => {
         async function fetchPizza() {
@@ -42,19 +37,33 @@ const FullPizza = () => {
         fetchPizza();
     }, [id]);
 
-    const onClickActiveType = (index) => {
+    const onClickActiveType = (index: any) => {
         setActiveType(index);
     };
 
-    const onClickActiveSize = (index) => {
+    const onClickActiveSize = (index: any) => {
         setActiveSize(index);
     };
 
     const typeNames = ['Тонкое', 'Традиционное'];
 
     if (!pizza) {
-        return 'Загрузка...';
+        return <>"Загрузка..."</>
     }
+
+    const onClickAdd = () => {
+        const item = {
+            id: pizza.id,
+            title: pizza.title,
+            price: pizza.price,
+            imageUrl: pizza.imageUrl,
+            type: typeNames[activeType],
+            size: activeSize,
+        };
+        dispatch(addItem(item));
+    };
+
+    const addedCount = cartItem ? cartItem.count : 0;
 
     return (
         <div className='fullPizza'>
@@ -66,7 +75,7 @@ const FullPizza = () => {
             />
             <div className='pizza-block__selector'>
                 <ul>
-                    {pizza.types.map((type, index) => {
+                    {pizza.types.map((type: any, index: any) => {
                         return (
                             <li
                                 key={index}
@@ -79,7 +88,7 @@ const FullPizza = () => {
                     })}
                 </ul>
                 <ul>
-                    {pizza.sizes.map((size, index) => {
+                    {pizza.sizes.map((size: any, index: any) => {
                         return (
                             <li
                                 key={index}
