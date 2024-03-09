@@ -36,8 +36,8 @@ const Home: React.FC = () => {
         sortOrder = `asc`;
     }
 
-    const onChangePage = (number: number) => {
-        setCurentPage(number);
+    const onChangePage = (idx: number) => {
+        setCurentPage(idx);
     };
 
     useEffect(() => {
