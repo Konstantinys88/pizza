@@ -2,7 +2,7 @@ import React from 'react';
 import Pagination from '../components/Pagination';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 import { selectFilter, setFilters } from '../redux/slices/filterSlice';
 import Categories from '../components/Categories';
@@ -13,9 +13,10 @@ import { Skeleton } from '../components/PizzaBlock/Skeleton';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
+import { useAppDispatch } from '../redux/store';
 
 const Home: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const { title, indexCategories, indexCategoriesSort, searchValue } = useSelector(selectFilter);
@@ -48,7 +49,6 @@ const Home: React.FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        // @ts-ignore
         dispatch(fetchPizzas({ curentPage, indexCategories, apiCategories, sortOrder }));
 
         window.scrollTo(0, 0);

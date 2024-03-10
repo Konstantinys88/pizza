@@ -3,7 +3,7 @@ import axios from 'axios';
 import { RootState } from '../store';
 
 type fetchPizzasArgs = {
-	curentPage: string; 
+	curentPage: number; 
 	indexCategories: number;
 	apiCategories: string;
 	sortOrder: string;
