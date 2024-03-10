@@ -4,18 +4,28 @@ import { addItem } from '../../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
 
 type PizzaBlockProps = {
-    id: string, 
-    title: string, 
-    imageUrl: string, 
-    sizes: number[], 
-    types:number[], 
-    price: string, 
-    rating: string,
-}
+    id: string;
+    title: string;
+    imageUrl: string;
+    sizes: number[];
+    types: number[];
+    price: number;
+    rating: string;
+};
 
-const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, imageUrl, sizes, types, price, rating }) => {
+const PizzaBlock: React.FC<PizzaBlockProps> = ({
+    id,
+    title,
+    imageUrl,
+    sizes,
+    types,
+    price,
+    rating,
+}) => {
     const dispatch = useDispatch();
-    const cartItem = useSelector((state: any) => state.cart.items.find((obj: any) => obj.id === id));
+    const cartItem = useSelector((state: any) =>
+        state.cart.items.find((obj: any) => obj.id === id),
+    );
     const [activeType, setActiveType] = useState(0);
     const [activeSize, setActiveSize] = useState(0);
 
@@ -29,6 +39,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, imageUrl, sizes, typ
             imageUrl,
             type: typeNames[activeType],
             size: activeSize,
+            count: 0,
         };
         dispatch(addItem(item));
     };
@@ -98,6 +109,6 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, imageUrl, sizes, typ
             </div>
         </div>
     );
-}
+};
 
 export default PizzaBlock;

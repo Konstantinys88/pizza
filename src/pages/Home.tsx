@@ -56,6 +56,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         const queryString = qs.stringify({
+            // @ts-ignore
             sortProperty: indexCategoriesSort.sortProperty,
             indexCategories,
             curentPage,

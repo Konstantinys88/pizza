@@ -8,12 +8,12 @@ const FullPizza: React.FC = () => {
     const dispatch = useDispatch();
 
     const [pizza, setPizza] = useState<{
-        id: number,
-        title: string,
-        price: number,
-        imageUrl: string,
-        sizes: number[],
-        types: number[],
+        id: string;
+        title: string;
+        price: number;
+        imageUrl: string;
+        sizes: number[];
+        types: number[];
     }>();
 
     const [activeType, setActiveType] = useState(0);
@@ -21,7 +21,9 @@ const FullPizza: React.FC = () => {
 
     const { id } = useParams();
 
-    const cartItem = useSelector((state: any) => state.cart.items.find((obj: any) => obj.id === id));
+    const cartItem = useSelector((state: any) =>
+        state.cart.items.find((obj: any) => obj.id === id),
+    );
 
     useEffect(() => {
         async function fetchPizza() {
@@ -48,7 +50,7 @@ const FullPizza: React.FC = () => {
     const typeNames = ['Тонкое', 'Традиционное'];
 
     if (!pizza) {
-        return <>"Загрузка..."</>
+        return <>"Загрузка..."</>;
     }
 
     const onClickAdd = () => {
@@ -59,6 +61,7 @@ const FullPizza: React.FC = () => {
             imageUrl: pizza.imageUrl,
             type: typeNames[activeType],
             size: activeSize,
+            count: 0,
         };
         dispatch(addItem(item));
     };

@@ -1,6 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../store';
 
-const initialState = {
+type filterSliceState = {
+	searchValue: string;
+	title:string;
+	indexCategories:number;
+	indexCategoriesSort: number
+}
+
+const initialState: filterSliceState = {
 	searchValue: '',
 	title: 'Все',
 	indexCategories: 0,
@@ -11,16 +19,16 @@ export const filterSlice = createSlice({
 	name: 'filter',
 	initialState,
 	reducers: {
-		titleFilter: (state, action) => {
+		titleFilter: (state, action: PayloadAction<string>) => {
 			state.title = action.payload;
 		},
-		setSearchValue: (state, action) => {
+		setSearchValue: (state, action: PayloadAction<string>) => {
 			state.searchValue = action.payload;
 		},
-		pizzasFilter: (state, action) => {
+		pizzasFilter: (state, action: PayloadAction<number>) => {
 			state.indexCategories = action.payload;
 		},
-		pizzasFilterSort: (state, action) => {
+		pizzasFilterSort: (state, action: PayloadAction<number>) => {
 			state.indexCategoriesSort = action.payload;
 		},
 		setFilters: (state, action) => {
@@ -30,7 +38,7 @@ export const filterSlice = createSlice({
 	},
 })
 
-export const selectFilter = (state) => state.filter;
+export const selectFilter = (state: RootState) => state.filter;
 
 export const { titleFilter, pizzasFilter, pizzasFilterSort, setFilters, setSearchValue } = filterSlice.actions;
 export default filterSlice.reducer;
