@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { titleFilter, pizzasFilter } from '../redux/slices/filterSlice';
+import { memo } from 'react';
 
 type CategoriesProps = {
-    indexCategories: number
-}
+    indexCategories: number;
+};
 
-const Categories: React.FC <CategoriesProps> = ({ indexCategories }) => {
-
+const Categories: React.FC<CategoriesProps> = memo(({ indexCategories }) => {
     const categories = ['Все', 'Мясные', 'Вегетарианские', ' Гриль', 'Острые', 'Закрытые'];
     const dispatch = useDispatch();
 
@@ -30,6 +30,6 @@ const Categories: React.FC <CategoriesProps> = ({ indexCategories }) => {
             </ul>
         </div>
     );
-}
+});
 
 export default Categories;
