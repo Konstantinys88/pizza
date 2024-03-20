@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { addItem } from '../redux/slices/cartSlice';
+import { addItem } from '../redux/slices/cart/slice';
 
 const FullPizza: React.FC = () => {
     const dispatch = useDispatch();

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CartItems from '../components/CartItems';
-import { clearItem } from '../redux/slices/cartSlice';
+import { clearItems } from '../redux/slices/cart/slice';
 import CartEmpty from '../components/CartEmpty';
 
 const Cart: React.FC = () => {
@@ -13,7 +13,7 @@ const Cart: React.FC = () => {
 
     const onClickClear = () => {
         if (window.confirm('Вы точно хотите очистить корзину ?')) {
-            dispatch(clearItem());
+            dispatch(clearItems());
         }
     };
 
