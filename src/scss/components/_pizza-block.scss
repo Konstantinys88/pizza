@@ -10,7 +10,10 @@
     // }
 
     &__image {
-        width: 260px;
+        // width: 260px;
+        max-height: 220px;
+        width: 100%;
+        max-width: 220px;
         &_fullpage {
             width: 320px;
         }
